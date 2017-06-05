@@ -1,11 +1,11 @@
 package com.jazz.leetcode.algorithms;
 
-import com.jazz.leetcode.algorithms.base.Tree;
 import com.jazz.leetcode.algorithms.base.TreeNode;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
+import java.util.Set;
 
 
 /**
@@ -22,7 +22,9 @@ public class Solution_111 {
     public static  int minDepth_bfs(TreeNode root) {
         if (root == null ) return 0 ;
         Queue<TreeNode> queue= new LinkedList();
+        Set<TreeNode> visited = new HashSet();
         queue.add(root);
+        visited.add(root);
         Integer depth =  0;
         while (!queue.isEmpty()){
             depth++;
@@ -43,32 +45,11 @@ public class Solution_111 {
         return depth ;
     }
 
-    public static  int minDepth_dfs(TreeNode root) {
-        if(root == null ) return 0 ;
-        int minDepth = Integer.MAX_VALUE ;
-        Stack<TreeNode>  stack = new Stack<TreeNode>();
-        stack.add(root);
-        int level = 0 ;
-        while(!stack.isEmpty()){
-            int levelSize = stack.size();
-            level ++ ;
-            for (int i = 0; i < levelSize; i++) {
-                TreeNode node = stack.pop();
-                if(node.left!=null) stack.push(node.left);
-                if(node.right!=null ) stack.push(node.right);
-                if(node.left == null && node.right == null ){
-                    minDepth =  Math.min(minDepth , level);
-                    continue;
-                }
-            }
-        }
-        return minDepth;
-    }
     public static void main(String[] args) {
-//        System.out.println(minDepth_dfs(TreeNode.mkTree("[1,2,3,4,5]")));
-//        System.out.println(minDepth_dfs(TreeNode.mkTree("[1,2]")));
-//        System.out.println(minDepth_dfs(TreeNode.mkTree("[0]")));
-        System.out.println(minDepth_dfs(TreeNode.mkTree("[1,2,3,4,null,null,5]")));
+        System.out.println(minDepth_bfs(TreeNode.mkTree("[1,2,3,4,5]")));
+        System.out.println(minDepth_bfs(TreeNode.mkTree("[1,2]")));
+        System.out.println(minDepth_bfs(TreeNode.mkTree("[1,2,null,3,null,4,null,5]")));
+        System.out.println(minDepth_bfs(TreeNode.mkTree("[1,2,3,4,null,null,5]")));
 
     }
 

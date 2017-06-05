@@ -1,5 +1,10 @@
 package com.jazz.leetcode.algorithms.base;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
 public class TreeNode {
     public int val;
     public TreeNode left;
@@ -9,47 +14,85 @@ public class TreeNode {
         return Integer.toString(val);
     }
 
-    //    int []arr = {3, 9, 20, Integer.MAX_VALUE, Integer.MAX_VALUE, 15, 7};
-    private static int[] StrToIntArray(String str) {
-        str = str.substring(1, str.length() - 1);
-        String []strs = str.split(",");
-        int []arr = new int[strs.length];
-
-        for (int i = 0; i < arr.length; i++) {
-            if (strs[i].equals("null")) {
-                arr[i] = Integer.MAX_VALUE;
-            } else {
-                arr[i] = Integer.parseInt(strs[i]);
-            }
+    public static TreeNode mkTree(String tree) {
+        // {1,2,3,4,#,#,#,5,#,6,#,7,#,8}
+        tree = tree.substring(1, tree.length() - 1);
+        String []ss = tree.split(",");
+        return createTree(ss);
+    }
+    private static TreeNode constructOne(String s) {
+        if (s.compareTo("null") == 0) {
+            return null;
+        } else {
+            return new TreeNode(Integer.parseInt(s));
         }
+    }
+    public static TreeNode createTree(String[] tree) {
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        // 1st one should not be #
+        TreeNode root = constructOne(tree[0]);
+        q.add(root);
+        int idx = 1;
+        while (!q.isEmpty()) {
 
-        return arr;
+            TreeNode tn = q.poll();
+            if (tn == null) {
+                continue;
+            }
+            // construct tn's left&right node
+            // when to stop
+            if (idx == tree.length) {
+                break;
+            }
+            TreeNode left_ = constructOne(tree[idx]);
+            tn.left = left_;
+            q.add(left_);
+            idx++;
+            if (idx == tree.length) {
+                break;
+            }
+            TreeNode right_ = constructOne(tree[idx]);
+            idx++;
+            tn.right = right_;
+            // add to queue
+            q.add(right_);
+        }
+        return root;
+
     }
 
-    //    String str = "[3,9,20,null,null,15,7]";
-    public static TreeNode mkTree(String str) {
-
-        int []arr = StrToIntArray(str);
-        TreeNode []nodes = new TreeNode[arr.length + 1];
-        for (int i = 1; i < nodes.length; i++) {
-            if (arr[i - 1] != Integer.MAX_VALUE) {
-                nodes[i] = new TreeNode(arr[i - 1]);
-            }else {
-                nodes[i] = null;
-            }
+    private static void printNode(TreeNode tn, int indent) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < indent; i++) {
+            sb.append("\t");
         }
+        sb.append(tn.val);
+        System.out.println(sb.toString());
+    }
 
-        TreeNode node = null;
-        for (int i = 1; i <= nodes.length / 2; i++) {
-            node = nodes[i];
-            if (node == null) continue;
-            int left = 2 * i;
-            if(left>=nodes.length) break;
-            node.left = nodes[2 * i];
-            int right = left +1;
-            if(right>=nodes.length) break;
-            node.right = nodes[2 * i + 1];
+    public static void printTree(TreeNode root, int indent) {
+        if (root == null) {
+            return;
         }
-        return nodes[1];
+//      if (root.left == null && root.right == null) {
+//          printNode(root, indent);
+//      }
+        // right
+        printTree(root.right, indent + 1);
+        // self
+        printNode(root, indent);
+        // left
+        printTree(root.left, indent + 1);
+    }
+
+    public static void printTree(TreeNode root) {
+        // right first
+        printTree(root, 0);
+    }
+
+    public static void main(String[] args) {
+        String str = "[1,2,null,3,null,4,null,5]";
+        TreeNode node = TreeNode.mkTree(str);
+        System.out.println(1);
     }
 }
