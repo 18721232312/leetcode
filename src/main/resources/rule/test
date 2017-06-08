@@ -1,0 +1,14 @@
+http://download.jboss.org/drools/release/6.5.0.Final/
+http://www.w2bc.com/Article/49757
+http://www.w2bc.com/article/32670
+http://www.w2bc.com/article/149432
+http://www.w2bc.com/article/143974
+http://www.w2bc.com/article/121229
+http://www.w2bc.com/article/121546
+http://www.w2bc.com/article/221473
+http://www.w2bc.com/article/58801
+http://www.w2bc.com/article/221473
+
+改JDK版本
+改部署的MAVEN私服地址 和本地仓库
+重启后，数据丢失
