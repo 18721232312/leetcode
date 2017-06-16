@@ -8,7 +8,144 @@ http://www.w2bc.com/article/121546
 http://www.w2bc.com/article/221473
 http://www.w2bc.com/article/58801
 http://www.w2bc.com/article/221473
+workbench:
+http://localhost:8080/kie-drools-wb/kie-drools-wb.jsp
+http://www.itxm.net/a/bianchengyuyan/2016/1205/842.html
+
+http://download.jboss.org/drools/release/6.5.0.Final/
+http://blog.csdn.net/u012373815/article/details/53526287
+
+规则引擎选型及简单应用
+http://www.w2bc.com/article/235342
+
+kiegroup/drools
+https://github.com/kiegroup/drools
+业务规则引擎浅析
+http://www.w2bc.com/article/112928
+了解JBoss Drools Engine
+http://www.w2bc.com/Article/49757
+规则引擎
+http://www.w2bc.com/article/32670
+基于Spring + Drools6.4规则引擎代码实例
+http://www.w2bc.com/article/149432
+http://www.w2bc.com/article/143974
+[置顶] jboss规则引擎KIE Drools 6.3.0 Final 教程(1)
+http://www.w2bc.com/article/121229
+[置顶] jboss规则引擎KIE Drools 6.3.0 Final 教程(2)
+http://www.w2bc.com/article/121546
+[置顶] jboss规则引擎KIE Drools 6.3.0 Final 教程(3)
+http://www.w2bc.com/article/121633
+了解JBoss Drools Engine
+http://www.w2bc.com/article/58801
+[置顶] jboss规则引擎KIE Drools 6.3.0-高级讲授篇
+http://www.w2bc.com/article/221473
+
+http://www.cnblogs.com/ying-07/p/Decision_Table-%E5%86%B3%E7%AD%96%E8%A1%A8.html
+http://docs.jboss.org/drools/release/6.4.0.Final/drools-docs/html_single/index.html
+
+http://www.w2bc.com/article/180968
+http://www.w2bc.com/article/167931
+http://so.w2bc.com/cse/search?s=10704470938740108515&entry=1&q=lifetragedy+
+lifetragedy
+改JDK版本
+改部署的MAVEN私服地址 和本地仓库
+重启后，数据丢失
+
+http://www.cnblogs.com/findumars/p/6284442.html
+
+
 
 改JDK版本
 改部署的MAVEN私服地址 和本地仓库
 重启后，数据丢失
+
+
+
+import org.kie.api.KieServices;
+import org.kie.api.builder.KieBuilder;
+import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.Results;
+import org.kie.api.io.ResourceType;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.StatelessKieSession;
+import org.kie.internal.KnowledgeBase;
+import org.kie.internal.KnowledgeBaseFactory;
+import org.kie.internal.builder.KnowledgeBuilder;
+import org.kie.internal.builder.KnowledgeBuilderErrors;
+import org.kie.internal.builder.KnowledgeBuilderFactory;
+import org.kie.internal.io.ResourceFactory;
+
+import java.io.StringReader;
+
+/**
+ * @Description:  drools API 装饰
+ * @Team: 新金融业务研发团队
+ * @Author BK
+ * @Date 2017/5/4 14:25
+ * @Version V2.0
+ */
+public class DroolsApiDecorator {
+    private KnowledgeBuilder kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
+//    private static KnowledgeBase kBase;
+    private KieSession kieSessionStatefull;//有状态的kiesession
+    private StatelessKieSession kSessionStateless;//无状态的kiesession
+
+    static{
+//        kb = KnowledgeBuilderFactory.newKnowledgeBuilder();
+//        kBase = KnowledgeBaseFactory.newKnowledgeBase();
+    }
+    /**
+     * 初始化Drools
+     */
+    public void initDroolsStateless(String droolsRule ) {
+        kb.add(ResourceFactory.newReaderResource(new StringReader(droolsRule)), ResourceType.DRL);//装入规则，可以装入多个
+        KnowledgeBuilderErrors errors = kb.getErrors();
+        if(!errors.isEmpty()){
+            throw new DroolsException("Drl has error message : " + errors.toString());
+        }
+        KnowledgeBase kBase = KnowledgeBaseFactory.newKnowledgeBase();
+        kBase.addKnowledgePackages(kb.getKnowledgePackages());
+        kSessionStateless= kBase.newStatelessKieSession();
+    }
+    public void execute(Message message){
+        kSessionStateless.execute(message);
+    }
+
+    /**
+     * 初始化Drools
+     * @param droolsRule
+     */
+    public void initDrools(String droolsRule) {
+        KieServices kieServices = KieServices.Factory.get();
+        KieFileSystem kfs = kieServices.newKieFileSystem();
+        kfs.write("src/main/resources/"+droolsRule.hashCode()+".drl",kieServices.getResources().newReaderResource(new StringReader(droolsRule)));
+        KieBuilder kieBuilder = kieServices.newKieBuilder(kfs).buildAll();
+        Results results = kieBuilder.getResults();
+        if (results.hasMessages(org.kie.api.builder.Message.Level.ERROR)) {
+            throw new DroolsException("Drl has error message : " + results.getMessages());
+        }
+        KieContainer kieContainer = kieServices.newKieContainer(kieBuilder.getKieModule().getReleaseId());
+        kieSessionStatefull = kieContainer.newKieSession();
+    }
+
+    /**
+     * 初始化knowledgeSession里面使用的参数
+     */
+    public  void initObject( Message message) {
+        kieSessionStatefull.insert(message);
+    }
+
+    /**
+     * Fire所有的规则
+     */
+    public void fireRules() {
+        kieSessionStatefull.fireAllRules();
+    }
+
+    /**
+     * dispose
+     */
+    public void dispose() {
+        kieSessionStatefull.dispose();
+    }
