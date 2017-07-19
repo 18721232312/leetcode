@@ -1,4 +1,4 @@
-package com.jazz.drools;
+package com.jazz.utils;
 
 
 import org.apache.velocity.VelocityContext;

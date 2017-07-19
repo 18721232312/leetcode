@@ -1,4 +1,4 @@
-package com.jazz.drools;
+package com.jazz.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.beans.BeanCopier;
