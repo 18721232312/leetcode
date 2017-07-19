@@ -55,6 +55,11 @@
             <version>1.16.10</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.1</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
