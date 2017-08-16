@@ -21,7 +21,8 @@ String类型的key，不能用==判断或者可能有哈希冲突时，尽量减
 由于JDK自带的MAP存在的是封装之后的类型， 每次使用涉及到自动装箱和自动折箱， 效率上会有不不上的影响，可以设计或者使用一个，使用原始类型的Map，来优化性能。
 比绍：使用netty中的IntObjectHashMap和使用trove4j的IntObjectHashMap
 https://github.com/ReactivePlatform/netty-in-action-cn.git
-
+http://www.importnew.com/26212.html#comment-572846
+http://www.infoq.com/cn/articles/netty-high-performance
 Netty以及其他FastUtils之类的原始类型map，都支持key是int或 long。但两者的区别并不仅仅在于int 换 Integer的那点空间，而是整个存储结构和Hash冲突的解决方法都不一样。
 HashMap的结构是 Node[] table; Node 下面有Hash，Key，Value，Next四个属性。
 而IntObjectHashMap的结构是int[] keys 和 Object[] values.
