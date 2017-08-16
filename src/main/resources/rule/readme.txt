@@ -1,3 +1,15 @@
+
+缓存基本数据，共用数据到本地， 减少数据库调用 ，与网络传输的延时
+可深度定制
+当面临更大流量的需求时，通过线性扩容的方法，即可应对
+
+
+可以考虑卸载流量.比如每十个请求,随机抛弃九个,只放行一个请求到后续处理环节.把秒杀的排序模式,变为随机抽奖的模式.
+
+https://github.com/btraceio/btrace
+
+
+http://calvin1978.blogcn.com/articles/hashmap.html
 如何去优化一个Map:
 
 考虑加载因子地设定初始大小
@@ -5,9 +17,10 @@
 扩容时，如何提升旧对象拷贝的效率
 String类型的key，不能用==判断或者可能有哈希冲突时，尽量减少长度
 使用定制版的EnumMap
+优化hash算法，减少碰撞的机率
 由于JDK自带的MAP存在的是封装之后的类型， 每次使用涉及到自动装箱和自动折箱， 效率上会有不不上的影响，可以设计或者使用一个，使用原始类型的Map，来优化性能。
 比绍：使用netty中的IntObjectHashMap和使用trove4j的IntObjectHashMap
-
+https://github.com/ReactivePlatform/netty-in-action-cn.git
 
 Netty以及其他FastUtils之类的原始类型map，都支持key是int或 long。但两者的区别并不仅仅在于int 换 Integer的那点空间，而是整个存储结构和Hash冲突的解决方法都不一样。
 HashMap的结构是 Node[] table; Node 下面有Hash，Key，Value，Next四个属性。
