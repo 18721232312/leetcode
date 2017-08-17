@@ -1,27 +1,25 @@
 package com.jazz.nio.mms;
 
 /**
- * @Description:
- *
- * Sub Reactor在实作上有个重点要注意，
-当一个监听中而阻塞住的selector由于Acceptor需要注册新的IO事件到该selector上时，
-Acceptor会调用selector的wakeup()函数唤醒阻塞住的selector，以注册新IO事件后再继续监听。
-但Sub Reactor中循环调用selector.select()的线程回圈可能会因为循环太快，导致selector被唤醒后再度于IO事件成功注册前被调用selector.select()而阻塞住，
-因此我们需要给Sub Reactor线程循环设置一个flag来控制，
-让selector被唤醒后不会马上进入下回合调用selector.select()的Sub Reactor线程循环，
-等待我们将新的IO事件注册完之后才能让Sub Reactor线程继续运行。
+ * @Description: Sub Reactor在实作上有个重点要注意，
+ * 当一个监听中而阻塞住的selector由于Acceptor需要注册新的IO事件到该selector上时，
+ * Acceptor会调用selector的wakeup()函数唤醒阻塞住的selector，以注册新IO事件后再继续监听。
+ * 但Sub Reactor中循环调用selector.select()的线程回圈可能会因为循环太快，导致selector被唤醒后再度于IO事件成功注册前被调用selector.select()而阻塞住，
+ * 因此我们需要给Sub Reactor线程循环设置一个flag来控制，
+ * 让selector被唤醒后不会马上进入下回合调用selector.select()的Sub Reactor线程循环，
+ * 等待我们将新的IO事件注册完之后才能让Sub Reactor线程继续运行。
  * @Team: 新金融业务研发团队
  * @Author BK
  * @Date 2017/8/17 20:31
  * @Version V2.0
  */
 
-        import java.io.IOException;
-        import java.nio.channels.SelectionKey;
-        import java.nio.channels.Selector;
-        import java.nio.channels.ServerSocketChannel;
-        import java.util.Iterator;
-        import java.util.Set;
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.util.Iterator;
+import java.util.Set;
 
 public class TCPSubReactor implements Runnable {
 

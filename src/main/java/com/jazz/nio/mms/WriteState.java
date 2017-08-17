@@ -7,13 +7,14 @@ package com.jazz.nio.mms;
  * @Date 2017/8/17 20:33
  * @Version V2.0
  */
-        import java.io.IOException;
-        import java.nio.ByteBuffer;
-        import java.nio.channels.SelectionKey;
-        import java.nio.channels.SocketChannel;
-        import java.util.concurrent.ThreadPoolExecutor;
 
-public class WriteState implements HandlerState{
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
+import java.util.concurrent.ThreadPoolExecutor;
+
+public class WriteState implements HandlerState {
 
     public WriteState() {
     }

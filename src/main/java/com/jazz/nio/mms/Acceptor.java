@@ -9,11 +9,11 @@ package com.jazz.nio.mms;
  */
 // 接受連線請求線程
 
-        import java.io.IOException;
-        import java.nio.channels.SelectionKey;
-        import java.nio.channels.Selector;
-        import java.nio.channels.ServerSocketChannel;
-        import java.nio.channels.SocketChannel;
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 
 public class Acceptor implements Runnable {
 

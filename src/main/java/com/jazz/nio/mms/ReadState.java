@@ -8,13 +8,13 @@ package com.jazz.nio.mms;
  * @Version V2.0
  */
 
-        import java.io.IOException;
-        import java.nio.ByteBuffer;
-        import java.nio.channels.SelectionKey;
-        import java.nio.channels.SocketChannel;
-        import java.util.concurrent.ThreadPoolExecutor;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.SocketChannel;
+import java.util.concurrent.ThreadPoolExecutor;
 
-public class ReadState implements HandlerState{
+public class ReadState implements HandlerState {
 
     private SelectionKey sk;
 
@@ -36,8 +36,7 @@ public class ReadState implements HandlerState{
         ByteBuffer buf = ByteBuffer.wrap(arr);
 
         int numBytes = sc.read(buf); // 讀取字符串
-        if(numBytes == -1)
-        {
+        if (numBytes == -1) {
             System.out.println("[Warning!] A client has been closed.");
             h.closeChannel();
             return;
@@ -73,7 +72,7 @@ public class ReadState implements HandlerState{
 
         public WorkerThread(TCPHandler h, String str) {
             this.h = h;
-            this.str=str;
+            this.str = str;
         }
 
         @Override
