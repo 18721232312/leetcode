@@ -1,3 +1,6 @@
+https://github.com/Viscent/javamtia.git
+https://github.com/ReactivePlatform/netty-in-action-cn.git
+
 https://segmentfault.com/a/1190000007403873
 
 这些代码的调优原则是：临时对象能改成静态对象进行复用就改成公用对象否则要想方设法缩短其生命周期；高频访问代码提高响应速度。根据 jvm gc 日志发现很多 young gc 之后堆内存已用空间不仅下降反而上升至最大使用量导致 full gc，临时对象如果可以和其它线程复用的话改成静态对象以减少大量线程 local 对象的产生。
