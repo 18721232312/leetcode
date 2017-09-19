@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Premain-Class: com.hotpatch.attach.Agent
+Created-By: 1.6.0_29
