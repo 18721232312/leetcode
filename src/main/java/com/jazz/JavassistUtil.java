@@ -2,11 +2,8 @@ package com.jazz;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.pingan.haofang.riskcontrol.dto.droolscall.BaseDroolsMessage;
-import com.pingan.haofang.riskcontrol.dto.droolscall.BeanSetterMethodInvoker;
 import javassist.*;
 import lombok.Data;
-import org.apache.commons.lang3.StringUtils;
 import org.kie.internal.builder.KnowledgeBuilder;
 
 import java.io.IOException;
@@ -98,10 +95,10 @@ public class JavassistUtil {
     private static void addVoidMethod(CtClass ctClass, String methodName) throws CannotCompileException {
 //        CtMethod method = new CtMethod(CtClass.voidType, "getProperty", new CtClass[]{new }, ctClass);
 //        method.setModifiers(Modifier.PUBLIC);
-//        method.setBody("{com.pingan.haofang.riskcontrol.dto.droolscall.BeanSetterMethodInvoker.getter(this,\""+property+"\")}");
+//        method.setBody("{BXeanSetterMethodInvoker.getter(this,\""+property+"\")}");
 //        ctClass.addVoidMethod(method);
         CtMethod showInfo = CtMethod.make("private void "+methodName+"(String property) {}", ctClass);
-        showInfo.setBody("{return com.pingan.haofang.riskcontrol.dto.droolscall.BeanSetterMethodInvoker.getter(this,$1);}");
+        showInfo.setBody("{return BxeanSetterMethodInvoker.getter(this,$1);}");
         ctClass.addMethod(showInfo);
     }
 
