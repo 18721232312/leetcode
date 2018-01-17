@@ -2,7 +2,6 @@ package com.jazz.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -20,19 +19,19 @@ public class IpAddressUtils {
      * @param request
      * @return
      */
-    public static String getIpAddr(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("PRoxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
-    }
+//    public static String getIpAddr(HttpServletRequest request) {
+//        String ip = request.getHeader("x-forwarded-for");
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("PRoxy-Client-IP");
+//        }
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getHeader("WL-Proxy-Client-IP");
+//        }
+//        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+//            ip = request.getRemoteAddr();
+//        }
+//        return ip;
+//    }
 
     /**
      * 获取web容器所在服务器的Ip地址
