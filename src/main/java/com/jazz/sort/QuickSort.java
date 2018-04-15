@@ -4,6 +4,7 @@ package com.jazz.sort;
  * @author BK
  * @version V2.0
  * @description:
+ * https://www.jianshu.com/p/2ae6ba100d3a
  * @team:
  * @date 2018/1/26 23:19
  */
