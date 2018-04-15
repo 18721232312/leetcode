@@ -10,8 +10,9 @@ package com.jazz.sort;
 public class QuickSort {
 
     public static void main(String[] args) {
-        int[] arrays = {6,89,21,1,96,3,9,88};
-        sort(arrays,0,arrays.length-1);
+        int[] arrays = {102, 3, 5, 52, 6, 777, 88, 3, 32, 23, 15};
+//        int[] arrays = {6,89,21,1,96,3,9,88};
+        sort(arrays, 0, arrays.length - 1);
         print(arrays);
 
     }
@@ -24,30 +25,24 @@ public class QuickSort {
     }
 
     private static void sort(int[] arrays, int start, int end) {
-        if(start>end) return ;
+        if (start > end) return;
         int pivot = arrays[start];
-        int i = start+1;
-        int j = end ;
-        while(true){
-            while(i<=end && arrays[i]<pivot){
-                i++;
+        int left = start + 1;
+        int right = end;
+        while (left <= right) {
+            while (left <= right && arrays[left] <= pivot) {
+                left++;
             }
-            while(j>start  && arrays[j]>pivot){
-                j--;
+            while (left <= right && arrays[right] >= pivot) {
+                right--;
             }
-            if(i<j){
-                SortUtils.swap(arrays,i,j);
-            }else{
-                break;
+            if (left <= right) {
+                SortUtils.swap(arrays, left, right);
             }
         }
-        SortUtils.swap(arrays,start,j);
-        sort(arrays,start,j-1);
-        sort(arrays,j+1,end);
+        SortUtils.swap(arrays, start, right);
+        sort(arrays, start, right - 1);
+        sort(arrays, right + 1, end);
     }
 
-
-//    private static int[] sort2(int [] arr , int start , int end ){
-//        if(start)
-//    }
 }
